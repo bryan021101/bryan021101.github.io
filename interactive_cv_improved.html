@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudiante Ingeniería Telemática</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Navegación Superior */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            z-index: 1000;
+            transform: translateY(-100%);
+            animation: slideDown 0.8s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes slideDown {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Menú Desplegable de Contacto */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            min-width: 200px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .dropdown-item:first-child {
+            border-radius: 15px 15px 0 0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+            transform: translateX(5px);
+        }
+
+        .dropdown-icon {
+            margin-right: 12px;
+            font-size: 18px;
+            width: 20px;
+        }
+
+        /* Menú móvil */
+        .mobile-menu-toggle {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 20px;
+        }
+
+        .cv-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transform: translateY(20px);
+            animation: slideUp 0.8s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 60px 40px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            margin: 0 auto 20px;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: #666;
+            position: relative;
+            z-index: 1;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+        }
+
+        .name {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from {
+                text-shadow: 0 0 5px rgba(255,255,255,0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(255,255,255,0.8);
+            }
+        }
+
+        .title {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 0;
+        }
+
+        .sidebar {
+            background: #f8f9fa;
+            padding: 40px;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.6s; }
+        .section:nth-child(2) { animation-delay: 0.7s; }
+        .section:nth-child(3) { animation-delay: 0.8s; }
+        .section:nth-child(4) { animation-delay: 0.9s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .section-title:hover {
+            color: #3498db;
+            transform: translateX(10px);
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 30px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .section-title:hover::before {
+            width: 6px;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .contact-item:hover::before {
+            left: 100%;
+        }
+
+        .contact-item:hover {
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .contact-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 15px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: rotate(360deg);
+        }
+
+        .experience-item {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border-left: 5px solid #3498db;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(52, 152, 219, 0.1));
+            transform: rotate(45deg);
+            transition: all 0.4s ease;
+            opacity: 0;
+        }
+
+        .experience-item:hover::before {
+            opacity: 1;
+            right: -25%;
+        }
+
+        .experience-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-left-color: #e74c3c;
+        }
+
+        .job-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .experience-item:hover .job-title {
+            color: #3498db;
+        }
+
+        .company {
+            color: #7f8c8d;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .year {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            display: inline-block;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover .year {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            transform: scale(1.05);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-item {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, #3498db, #e74c3c, #f39c12, #27ae60, #3498db);
+            animation: rotateGradient 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .skill-item:hover::before {
+            opacity: 0.1;
+        }
+
+        @keyframes rotateGradient {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .skill-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-color: #3498db;
+        }
+
+        .education-item {
+            background: linear-gradient(135deg, white, #f8f9fa);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border-left: 5px solid #27ae60;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .education-item::after {
+            content: '🎓';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            opacity: 0.1;
+            transition: all 0.3s ease;
+        }
+
+        .education-item:hover::after {
+            opacity: 0.3;
+            transform: rotate(15deg) scale(1.2);
+        }
+
+        .education-item:hover {
+            transform: translateX(10px) scale(1.02);
+            border-left-color: #f39c12;
+        }
+
+        .cert-badge {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            display: inline-block;
+            margin: 8px 8px 8px 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cert-badge::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s ease;
+        }
+
+        .cert-badge:hover::before {
+            width: 200%;
+            height: 200%;
+        }
+
+        .cert-badge:hover {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .reference-item {
+            background: linear-gradient(135deg, white, #f1f2f6);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .reference-item::before {
+            content: '👤';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            opacity: 0.1;
+        }
+
+        .reference-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        /* Botones de Acción Flotantes */
+        .floating-actions {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.3);
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .floating-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s ease;
+        }
+
+        .floating-btn:hover::before {
+            width: 200%;
+            height: 200%;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1) rotate(360deg);
+            box-shadow: 0 15px 35px rgba(52, 152, 219, 0.4);
+        }
+
+        .floating-btn.whatsapp {
+            background: linear-gradient(45deg, #25d366, #128c7e);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+        }
+
+        .floating-btn.email {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 15px;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            border-radius: 5px;
+            width: 0%;
+            animation: fillProgress 2s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes fillProgress {
+            to { width: 85%; }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(44, 62, 80, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 20px;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .nav-menu.active {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .dropdown-content {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                background: rgba(255,255,255,0.1);
+                margin-top: 10px;
+            }
+
+            .dropdown-item {
+                color: white;
+            }
+
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
+                margin-top: 70px;
+            }
+            
+            .header {
+                padding: 40px 20px 20px;
+            }
+            
+            .name {
+                font-size: 2em;
+            }
+            
+            .sidebar, .main-content {
+                padding: 20px;
+            }
+
+            .floating-actions {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        /* Tooltip personalizado */
+        .tooltip {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .tooltip::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2c3e50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .tooltip:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegación Superior -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span>💻</span>
+                <span>Bryan Josue Lagos Duarte</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="#perfil" class="nav-link">Perfil</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#experiencia" class="nav-link">Experiencia</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#educacion" class="nav-link">Educación</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Contacto ▼</a>
+                    <div class="dropdown-content">
+                        <a href="mailto:lagosbryam@gmail.com" class="dropdown-item">
+                            <span class="dropdown-icon">📧</span>
+                            Enviar Email
+                        </a>
+                        <a href="https://wa.me/50558292255" target="_blank" class="dropdown-item">
+                            <span class="dropdown-icon">📱</span>
+                            WhatsApp
+                        </a>
+                        <a href="#" class="dropdown-item" onclick="copyToClipboard('58292255')">
+                            <span class="dropdown-icon">📞</span>
+                            Copiar Teléfono
+                        </a>
+                        
+                    </div>
+                </li>
+            </ul>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="cv-container">
+            <!-- Header -->
+            <div class="header">
+                <div class="profile-img tooltip" data-tooltip="¡Haz clic para sorpresa!" onclick="profileAnimation()">👨‍💻</div>
+                <h1 class="name">Estudiante de Ingeniería Telemática</h1>
+                <p class="title">UNAN-Managua | Redes, Servidores y Ciberseguridad</p>
+            </div>
+
+            <div class="content">
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <!-- Contacto -->
+                    <div class="section">
+                        <h2 class="section-title">📞 Contacto</h2>
+                        <div class="contact-item" onclick="copyToClipboard('58292255')">
+                            <div class="contact-icon">📱</div>
+                            <div>58292255</div>
+                        </div>
+                        <div class="contact-item" onclick="window.open('mailto:lagosbryam@gmail.com')">
+                            <div class="contact-icon">📧</div>
+                            <div>lagosbryam@gmail.com</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div>Managua, Carretera a Masaya</div>
+                        </div>
+                    </div>
+
+                    <!-- Habilidades -->
+                    <div class="section">
+                        <h2 class="section-title">🎯 Habilidades</h2>
+                        <div class="skills-grid">
+                            <div class="skill-item tooltip" data-tooltip="Nivel: Avanzado">
+                                <strong>Liderazgo</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item tooltip" data-tooltip="Nivel: Excelente">
+                                <strong>Comunicación</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item tooltip" data-tooltip="Level: Experto">
+                                <strong>Trabajo en equipo</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item tooltip" data-tooltip="Nivel: Muy bueno">
+                                <strong>Resolución de problemas</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item tooltip" data-tooltip="Nivel: Avanzado">
+                                <strong>Elaboración de reportes</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item tooltip" data-tooltip="Nivel: Excepcional">
+                                <strong>Responsabilidad</strong>
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Referencias -->
+                    <div class="section">
+                        <h2 class="section-title">👥 Referencias</h2>
+                        <div class="reference-item">
+                            <strong>Ulises Andres Ramirez Santana</strong><br>
+                            Master en Ciberseguridad<br>
+                            📞 76794530
+                        </div>
+                        <div class="reference-item">
+                            <strong>Ledy Marjorie Esteban Esteban</strong><br>
+                            Responsable de Soporte Técnico<br>
+                            📞 88999751
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <!-- Perfil Profesional -->
+                    <div class="section" id="perfil">
+                        <h2 class="section-title">👨‍🎓 Perfil Profesional</h2>
+                        <p>Soy estudiante de quinto año de Ingeniería en Telemática en la UNAN-Managua, con conocimientos en redes, seguridad informática, virtualización y servicios en la nube (Azure y AWS). Uso herramientas como Splunk, VMware ESXi, vCenter, Docker, Asterisk, Issabel y tengo conocimientos en ciberseguridad estructurados.</p>
+                        
+                        <p>He trabajado con plataformas de monitoreo de infraestructura como Zabbix, permitiendo una gestión proactiva de redes y servicios. Además, he tomado cursos especializados en hacking ético, vulnerabilidades e informática forense, y me he desempeñado como instructor de laboratorio en áreas de seguridad informática y soporte técnico.</p>
+                        
+                        <p><strong>Mi objetivo es seguir fortaleciendo mis habilidades técnicas y aportar soluciones eficientes en entornos tecnológicos.</strong></p>
+                    </div>
+
+                    <!-- Experiencia -->
+                    <div class="section" id="experiencia">
+                        <h2 class="section-title">💼 Experiencia</h2>
+                        <div class="experience-item">
+                            <div class="job-title">Pasante de Soporte Técnico y Seguridad Informática</div>
+                            <div class="company">UNAN-Managua</div>
+                            <div class="year">2024</div>
+                            <p>Desarrollo de habilidades en mantenimiento de equipos, resolución de problemas técnicos y implementación de medidas de seguridad informática.</p>
+                        </div>
+                        
+                        <div class="experience-item">
+                            <div class="job-title">Pasante de Operaciones de Redes</div>
+                            <div class="company">Tigo-Nicaragua</div>
+                            <div class="year">2025</div>
+                            <p>Experiencia en monitoreo de redes, análisis de tráfico y mantenimiento de infraestructura de telecomunicaciones.</p>
+                        </div>
+                    </div>
+
+                    <!-- Educación -->
+                    <div class="section" id="educacion">
+                        <h2 class="section-title">🎓 Educación</h2>
+                        <div class="education-item">
+                            <strong>Ing. Telemática</strong><br>
+                            Universidad UNAN-Managua (2021-Actualidad)
+                        </div>
+
+                        <h3 style="margin-top: 30px; margin-bottom: 20px; color: #2c3e50; font-size: 1.5em;">🏆 Certificaciones:</h3>
+
+                        <h4 style="margin-top: 25px; margin-bottom: 15px; color: #27ae60;">Microsoft Azure:</h4>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/f8b97afc-8ed9-495a-be7f-9cd0794b2a2e/public_url', '_blank')">Azure AI Fundamentals (AI-900)</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/3c69bc64-55ed-406e-870c-6023d56886e9/public_url', '_blank')">Azure Fundamentals (AZ-900)</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/212e5593-189b-4b8f-9b6b-b9ce6cae8577/public_url', '_blank')">Azure Data Fundamentals (DP-900)</div>
+
+                        <h4 style="margin-top: 25px; margin-bottom: 15px; color: #e74c3c;">Fortinet:</h4>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/f0065c1c-1c14-40bc-bcb4-b7d2d29da171/public_url', '_blank')">Fundamentals in Cybersecurity</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/8281c02c-d73c-46d6-b7c0-eb1310e770e8/public_url', '_blank')">Associate in Cybersecurity</div>
+
+
+                        <h3 style="margin-top: 30px; margin-bottom: 20px; color: #2c3e50; font-size: 1.5em;">🏆 Cursos y Preparaciones:</h3>
+                        <h4 style="margin-top: 25px; margin-bottom: 15px; color: #3498db;">Cisco:</h4>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/029987ed-ee15-43b1-9668-c185109cf117/public_url', '_blank')">CyberOps Associate</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/1b755e05-eb96-4081-bc0c-bf1ea5099df7/public_url', '_blank')">CCNA: Introduction to Networks</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/b98baae0-1cbc-41c0-98d7-85aa0f850ae4/public_url', '_blank')">CCNA: Switching, Routing, and Wireless Essentials</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/7a793fe9-7e7f-4cc9-9ed5-fe1148ccd177/public_url', '_blank')">CCNA: Enterprise Networking, Security, and Automation</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/490dcb64-eccc-44c3-b551-501dea44243c/public_url', '_blank')">Junior Cybersecurity Analyst</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/320592a1-1765-4fde-b9ee-3a0662e24f88/public_url', '_blank')">Ethical Hacker</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/03fe49e8-d1ae-4dcb-b99f-c19c5d9b9e95/public_url', '_blank')">Network Technician</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/5c533bbe-3d08-411c-892e-d72fe9d71f5e/public_url', '_blank')">Network Defense</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/160cce9e-2485-40c4-901a-9dff83a27015/public_url', '_blank')">Cyber Threat Management</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/b09b1a49-723f-4aaf-92e7-8e614a7a196c/public_url', '_blank')">Networking Devices Configuration</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/44d7b9bf-1fca-4f66-8e42-b865337b0d3c/public_url', '_blank')">Endpoint Security</div>
+
+                        <h4 style="margin-top: 25px; margin-bottom: 15px; color: #f39c12;">Otros Cursos:</h4>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/584536e9-9367-4c7d-94d5-f89e50eda5d1/public_url', '_blank')">ISC2 Candidate</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación en Credly" onclick="window.open('https://www.credly.com/badges/1a19f401-2fb7-4e08-9285-5b29fed22419/public_url', '_blank')">CAPC - Cybersecurity Awareness</div>
+                        <div class="cert-badge tooltip" data-tooltip="Ver certificación" onclick="window.open('https://learn.eccouncil.org/certificate/f9eef642-f746-47b8-b20f-88eb013cbb8b?logged=true', '_blank')">Digital Forensics Essential</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de Acción Flotantes -->
+    <div class="floating-actions">
+        <div class="floating-btn email tooltip" data-tooltip="Enviar Email" onclick="window.open('mailto:lagosbryam@gmail.com')">
+            📧
+        </div>
+        <div class="floating-btn whatsapp tooltip" data-tooltip="WhatsApp" onclick="window.open('https://wa.me/50558292255', '_blank')">
+            📱
+        </div>
+        
+    </div>
+
+    <script>
+        // Toggle menú móvil
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Funcionalidades interactivas
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                showNotification('¡Copiado al portapapeles! 📋');
+            }).catch(function() {
+                // Fallback para navegadores que no soportan la API moderna
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('¡Copiado al portapapeles! 📋');
+            });
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(45deg, #27ae60, #2ecc71);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                z-index: 1002;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+                font-weight: bold;
+                max-width: 300px;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 3000);
+        }
+
+        function profileAnimation() {
+            const profileImg = document.querySelector('.profile-img');
+            const emojis = ['👨‍💻', '🚀', '⚡', '🎯', '💡', '🔥', '✨', '🌟'];
+            let currentEmoji = 0;
+            
+            const interval = setInterval(() => {
+                profileImg.textContent = emojis[currentEmoji];
+                currentEmoji++;
+                
+                if (currentEmoji >= emojis.length) {
+                    profileImg.textContent = '👨‍💻';
+                    clearInterval(interval);
+                    showNotification('¡Animación completada! 🎉');
+                }
+            }, 200);
+        }
+
+        function showContactOptions() {
+            const options = `
+                📧 Email: lagosbryam@gmail.com
+                📱 WhatsApp: +505 58292255
+                📞 Teléfono: 58292255
+                📍 Ubicación: Managua, Carretera a Masaya
+            `;
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1003;
+                animation: fadeIn 0.3s ease;
+            `;
+            
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    padding: 40px;
+                    border-radius: 20px;
+                    max-width: 500px;
+                    width: 90%;
+                    text-align: center;
+                    animation: modalSlideIn 0.3s ease;
+                    position: relative;
+                ">
+                    <span onclick="this.parentElement.parentElement.remove()" style="
+                        position: absolute;
+                        top: 15px;
+                        right: 20px;
+                        font-size: 30px;
+                        cursor: pointer;
+                        color: #666;
+                    ">&times;</span>
+                    
+                    <h2 style="color: #2c3e50; margin-bottom: 20px;">📞 Opciones de Contacto</h2>
+                    
+                    <div style="display: grid; gap: 15px; margin: 20px 0;">
+                        <button onclick="window.open('mailto:lagosbryam@gmail.com')" style="
+                            background: linear-gradient(45deg, #e74c3c, #c0392b);
+                            color: white;
+                            border: none;
+                            padding: 15px 25px;
+                            border-radius: 25px;
+                            cursor: pointer;
+                            font-size: 16px;
+                            transition: transform 0.3s ease;
+                        " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            📧 Enviar Email
+                        </button>
+                        
+                        <button onclick="window.open('https://wa.me/50558292255', '_blank')" style="
+                            background: linear-gradient(45deg, #25d366, #128c7e);
+                            color: white;
+                            border: none;
+                            padding: 15px 25px;
+                            border-radius: 25px;
+                            cursor: pointer;
+                            font-size: 16px;
+                            transition: transform 0.3s ease;
+                        " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            📱 Abrir WhatsApp
+                        </button>
+                        
+                        <button onclick="copyToClipboard('58292255'); this.parentElement.parentElement.parentElement.remove();" style="
+                            background: linear-gradient(45deg, #3498db, #2980b9);
+                            color: white;
+                            border: none;
+                            padding: 15px 25px;
+                            border-radius: 25px;
+                            cursor: pointer;
+                            font-size: 16px;
+                            transition: transform 0.3s ease;
+                        " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            📞 Copiar Teléfono
+                        </button>
+                        
+                        <button onclick="downloadCV()" style="
+                            background: linear-gradient(45deg, #f39c12, #e67e22);
+                            color: white;
+                            border: none;
+                            padding: 15px 25px;
+                            border-radius: 25px;
+                            cursor: pointer;
+                            font-size: 16px;
+                            transition: transform 0.3s ease;
+                        " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                            📄 Descargar CV
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Cerrar modal al hacer clic fuera
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+
+        function downloadCV() {
+            showNotification('Preparando descarga del CV... 📄');
+            // Aquí podrías implementar la lógica para descargar el CV
+            // Por ejemplo, convertir la página a PDF o descargar un archivo predefinido
+        }
+
+        // Navegación suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animaciones al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observar elementos cuando la página carga
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.section').forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Animar barras de progreso
+            setTimeout(animateProgressBars, 1000);
+        });
+
+        // Animación de las barras de progreso
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach((bar, index) => {
+                setTimeout(() => {
+                    const skills = ['Liderazgo', 'Comunicación', 'Trabajo en equipo', 'Resolución de problemas', 'Elaboración de reportes', 'Responsabilidad'];
+                    const skillLevels = [88, 92, 95, 87, 90, 96]; // Niveles específicos para cada habilidad
+                    bar.style.width = skillLevels[index] + '%';
+                }, index * 300);
+            });
+        }
+
+        // Efectos de hover mejorados
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.experience-item, .education-item, .skill-item, .contact-item, .reference-item');
+            
+            items.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = this.classList.contains('skill-item') ? 
+                        'translateY(-10px) scale(1.05)' : 
+                        'translateY(-8px) scale(1.02)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+
+        // Cerrar menú móvil al hacer clic en un enlace
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const navMenu = document.getElementById('navMenu');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Agregar estilos dinámicos
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(100%);
+                }
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            
+            @keyframes modalSlideIn {
+                from {
+                    transform: translateY(-50px) scale(0.8);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0) scale(1);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
